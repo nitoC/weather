@@ -124,7 +124,7 @@ class Weather extends React.Component {
    return;
   }
   render() {
-    apiUrlCC = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.cityInp},${this.state.country}&APPID=${aID}`;
+    apiUrlCC = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.cityInp},${this.state.country}&APPID=${aID}`;
     return (
       <main>
         <div id="div" className="form-group">
