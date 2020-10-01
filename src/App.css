@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+}
+* {
+  margin: 0;
+  padding: 0;
+  
+}
+h2 {
+  font-family: courier new;
+  text-align: center;
+}
+h5 {
+  font-family:"courier New", cursive;
+  text-align: center;
+}
+#firstSection {
+  margin-bottom: 8%;
+}
+small {
+  font-weight: lighter;
+}
+.App-link {
+  color: #61dafa;
+}
