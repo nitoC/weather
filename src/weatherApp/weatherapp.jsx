@@ -1,6 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './cssFiles/weather.css';
 import Geoweather from './geoWeatherapp.jsx';
+import 'font-awesome/css/font-awesome.min.css';
+import 'font-awesome/all.min.js';
+import {useState,useEffect} from 'react';
+
 var descicons = [
   'clear sky',
   'few clouds',
@@ -29,19 +33,22 @@ var icon = [
   'fas fa-cloud-rain',
   'fas fa-cloud-rain'
 ];
-var aID = '709d60e1060c35dcb2d9bc6b3ab181f6';
+var aID = process.env.REACT_APP_API;
 var apiUrlCC;
-var icv = '';
+var icv = 'fas fa-cloud';
 const Display = (props) => {
+  const [I,setI]=useState('')
+  useEffect(()=>{
+      setI(props.weather.icon)
+      console.log(props.weather)
+  },[props])
+  
+  console.log(I+"=I")
   return (
     <div id="displayC">
       <h2>{props.weather.dispInput}</h2>
       <h1 className="display-1 text-center" style={{backgroundColor: 'white'}}>
-        <i
-          id="h1"
-          className={'text-dark ' + props.weather.icon}
-          style={{color: 'black'}}
-        />
+        <i id="h1" className={I} style={{color: 'black'}}/>
       </h1>
       <div id="weather">
         <h5>{props.weather.weather}</h5>
@@ -60,7 +67,7 @@ class Weather extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      icon: icv,
+      icon:'',
       cityInp: '',
       country: '',
       dispInput: 'WC current weather forcast',
@@ -77,17 +84,18 @@ class Weather extends React.Component {
   }
   handlevalues(weather, humidity, temp, wind, country, city, outlook) {
     this.setState({
+      icon:icv,
       temperature: Math.round(temp - 273.15) + 'deg celsius',
       dispInput: city + ', ' + country,
       outlook,
       humidity: ',relative humidity of ' + humidity,
       weather,
-      wind: ',' + wind + ' wind speed',
-      icon: icv,
+      wind: ',' + wind + ' wind speed'
+      
     });
   }
   changeCity(event) {
-    if (event.target.id == 'cc') {
+    if (event.target.id === 'cc') {
       console.log('hey');
       return this.setState({
         country: event.target.value,
@@ -98,7 +106,7 @@ class Weather extends React.Component {
       cityInp: event.target.value,
     });
   }
-  handleclick() {
+  async handleclick() {
     if(this.state.city!==''){
     var XML = fetch(apiUrlCC);
     XML.then((response) => response.json()).then((data) => {
@@ -108,6 +116,8 @@ class Weather extends React.Component {
           console.log(a);
           console.log(icon[b]);
           icv = icon[b];
+          console.log(icon[b])
+          console.log(icv+"icv")
         }
        
       });
@@ -120,11 +130,12 @@ class Weather extends React.Component {
         data.name
       );
     });
+    
    }
    return;
   }
   render() {
-    apiUrlCC = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.cityInp},${this.state.country}&APPID=${aID}`;
+    apiUrlCC = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.cityInp},${this.state.country}&APPID=${aID}`;
     return (
       <main>
         <div id="div" className="form-group">
@@ -134,7 +145,7 @@ class Weather extends React.Component {
             </h1>
           </header>
           <div id="upper">
-            <label for="city">city</label>
+            <label htmlFor="city">city</label>
             <input
               onChange={this.changeCity}
               type="text"
@@ -146,11 +157,11 @@ class Weather extends React.Component {
               required
             />
             <small id="helpId" className="form-text text-muted">
-              <a id="city" className="btn btn-link btn text-dark">
+              <a id="city" href="google.com" className="btn btn-link btn text-dark">
                 more info?
               </a>
             </small>
-            <label for="cc">Country Code</label>
+            <label htmlFor="cc">Country Code</label>
             <input
               onChange={this.changeCity}
               type="text"

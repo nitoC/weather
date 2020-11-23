@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import 'font-awesome/css/font-awesome.min.css';
+import 'font-awesome/all.min.js';
 var sc = {
   transform: 'scale(0)',
   top: '10%',
